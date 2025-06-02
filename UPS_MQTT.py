@@ -9,7 +9,7 @@ if (not(len(sys.argv) == 2 and str(sys.argv[1]).lower() in ['a', 'b'])):
     exit()
     
 
-broker_ip = "10.20.0.19"
+broker_ip = "10.10.10.3"
 broker_port = 1883
 
 alertTopic = "UPS/" + str(sys.argv[1]).upper() + "/Alert"
