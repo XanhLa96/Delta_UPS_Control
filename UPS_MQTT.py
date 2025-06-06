@@ -4,6 +4,7 @@ import serial, time
 import paho.mqtt.publish as publish
 import json
 
+
 if (not(len(sys.argv) == 2 and str(sys.argv[1]).lower() in ['a', 'b'])):
     print("python argv error")
     exit()
@@ -11,6 +12,12 @@ if (not(len(sys.argv) == 2 and str(sys.argv[1]).lower() in ['a', 'b'])):
 
 broker_ip = "10.10.10.3"
 broker_port = 1883
+broker_username = "vanduan96"
+broker_password = "your_password"
+auth = {
+    'username': broker_username,
+    'password': broker_password
+}
 
 alertTopic = "UPS/" + str(sys.argv[1]).upper() + "/Alert"
 monitorTopic = "UPS/" + str(sys.argv[1]).upper() + "/Monitor"
@@ -192,7 +199,7 @@ while(True):
         sendData["battery"]["nextChange"]["day"] = nextBattery_Day
         print(json.dumps(sendData))
         try:
-            publish.single(monitorTopic, json.dumps(sendData), hostname=broker_ip, port=broker_port)
+            publish.single(monitorTopic, json.dumps(sendData), hostname=broker_ip, port=broker_port, auth=auth)
         except:
             print("mqtt-send-data-error")
             pass
